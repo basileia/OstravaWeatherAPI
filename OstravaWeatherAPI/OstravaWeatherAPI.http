@@ -1,0 +1,6 @@
+@OstravaWeatherAPI_HostAddress = http://localhost:5051
+
+GET {{OstravaWeatherAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
