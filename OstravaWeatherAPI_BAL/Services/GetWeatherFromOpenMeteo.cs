@@ -1,6 +1,7 @@
 ﻿using Coravel.Invocable;
 using Newtonsoft.Json;
 using OstravaWeatherAPI_BAL.Models;
+using OstravaWeatherAPI_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,8 @@ namespace OstravaWeatherAPI_BAL.Services
             string responseJsonString = await response.Content.ReadAsStringAsync();
 
             Weather weather = JsonConvert.DeserializeObject<Weather>(responseJsonString);
-
+            DailyWeather dailyWeather = weather.ToDailyWeather();
+            
         }
 
     }
