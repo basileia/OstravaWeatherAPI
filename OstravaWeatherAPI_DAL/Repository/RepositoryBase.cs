@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Data;
+using System.Linq.Expressions;
 
 namespace OstravaWeatherAPI_DAL.Repository
 {
@@ -18,6 +19,11 @@ namespace OstravaWeatherAPI_DAL.Repository
         public T GetById(int id)
         {
             return _dbSet.Find(id);
+        }
+        
+        public bool EntityExists(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Any(predicate);
         }
 
         public List<T> GetAll()

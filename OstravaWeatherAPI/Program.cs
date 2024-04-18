@@ -1,7 +1,9 @@
 using Coravel;
 using Microsoft.EntityFrameworkCore;
 using OstravaWeatherAPI_BAL.Services;
+using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Data;
+using OstravaWeatherAPI_DAL.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IRepositoryDailyWeather, RepositoryDailyWeather>();
 
 builder.Services.AddTransient<GetWeatherFromOpenMeteo>();
 builder.Services.AddHttpClient();
