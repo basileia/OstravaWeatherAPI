@@ -1,5 +1,6 @@
 using Coravel;
 using Microsoft.EntityFrameworkCore;
+using OstravaWeatherAPI_BAL.Extensions;
 using OstravaWeatherAPI_BAL.Services;
 using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Data;
@@ -11,9 +12,8 @@ var Configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(Configuration.GetConnectionString("WebApiDbConnection")));
 
-// Add services to the container.
 builder.Services.AddControllers();
-
+builder.Services.AddAutoMapper(typeof(AppMapperProfile));
 builder.Services.AddScoped<IRepositoryDailyWeather, RepositoryDailyWeather>();
 
 builder.Services.AddTransient<GetWeatherFromOpenMeteo>();

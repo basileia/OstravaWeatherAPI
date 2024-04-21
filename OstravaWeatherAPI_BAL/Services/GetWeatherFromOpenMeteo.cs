@@ -3,12 +3,6 @@ using Newtonsoft.Json;
 using OstravaWeatherAPI_BAL.Models;
 using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace OstravaWeatherAPI_BAL.Services
 {
