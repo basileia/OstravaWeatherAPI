@@ -1,3 +1,4 @@
+using AutoMapper;
 using Coravel;
 using Microsoft.EntityFrameworkCore;
 using OstravaWeatherAPI_BAL.Extensions;
@@ -16,9 +17,11 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(AppMapperProfile));
 builder.Services.AddScoped<IRepositoryDailyWeather, RepositoryDailyWeather>();
 
+builder.Services.AddScoped<ServiceDailyWeather, ServiceDailyWeather>();
 builder.Services.AddTransient<GetWeatherFromOpenMeteo>();
 builder.Services.AddHttpClient();
 builder.Services.AddScheduler();
+builder.Services.AddScoped<IMapper, Mapper>();
 
 
 builder.Services.AddEndpointsApiExplorer();
