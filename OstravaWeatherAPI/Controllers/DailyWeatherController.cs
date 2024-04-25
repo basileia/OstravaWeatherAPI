@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 using OstravaWeatherAPI_BAL.Models;
 using OstravaWeatherAPI_BAL.Services;
 
@@ -6,7 +7,7 @@ namespace OstravaWeatherAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DailyWeatherController : ControllerBase
+    public class DailyWeatherController : BaseController
     {
         private readonly ServiceDailyWeather _serviceDailyWeather;
 
@@ -19,6 +20,12 @@ namespace OstravaWeatherAPI.Controllers
         public ActionResult<List<DailyWeatherModel>> GetAllDailyWeather()
         {
             return _serviceDailyWeather.GetAllDailyWeather();
+        }
+
+        [HttpGet("{date}")]
+        public ActionResult<DailyWeatherModel> GetDailyWeatherByDate(DateOnly date)
+        {
+            return GetResponse(_serviceDailyWeather.GetByDate(date));
         }
     }
 }

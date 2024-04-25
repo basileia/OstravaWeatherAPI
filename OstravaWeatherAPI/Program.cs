@@ -1,6 +1,8 @@
 using AutoMapper;
 using Coravel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using OstravaWeatherAPI_BAL.Extensions;
 using OstravaWeatherAPI_BAL.Services;
 using OstravaWeatherAPI_DAL.Contracts;
@@ -25,7 +27,12 @@ builder.Services.AddScoped<IMapper, Mapper>();
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+    c.MapType<DateOnly>(() => new OpenApiSchema { Type = "string", Format = "date", 
+        Example = new OpenApiString(DateTime.Now.ToString("yyyy-MM-dd")) });
+});
 
 var app = builder.Build();
 
@@ -41,9 +48,6 @@ app.Services.UseScheduler(scheduler =>
     scheduler.Schedule<GetWeatherFromOpenMeteo>()
         .EverySeconds(10);
 });
-
-
-
 
 app.UseHttpsRedirection();
 

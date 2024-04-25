@@ -16,6 +16,6 @@ namespace OstravaWeatherAPI_DAL.Repository
         public bool ExistsByDate(DateOnly date)
         {
             return EntityExists(e => e.Date == date);
-        }
+        }       
     }
 }

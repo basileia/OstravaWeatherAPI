@@ -20,6 +20,12 @@ namespace OstravaWeatherAPI_DAL.Repository
         {
             return _dbSet.Find(id);
         }
+
+        public T GetByDate(DateOnly date)
+        {
+            return _dbSet
+                .FirstOrDefault(e => EF.Property<DateOnly>(e, "Date") == date);
+        }
         
         public bool EntityExists(Expression<Func<T, bool>> predicate)
         {
