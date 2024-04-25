@@ -22,10 +22,20 @@ namespace OstravaWeatherAPI.Controllers
             return _serviceDailyWeather.GetAllDailyWeather();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<DailyWeatherModel> GetDailyWeatherById(int id)
+        {
+            return GetResponse(_serviceDailyWeather.GetDailyWeatherById(id));
+        }
+
         [HttpGet("{date}")]
         public ActionResult<DailyWeatherModel> GetDailyWeatherByDate(DateOnly date)
         {
             return GetResponse(_serviceDailyWeather.GetByDate(date));
         }
+
+
+
+
     }
 }

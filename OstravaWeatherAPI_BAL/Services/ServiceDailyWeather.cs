@@ -24,6 +24,20 @@ namespace OstravaWeatherAPI_BAL.Services
             return dailyWeatherModel;
         }
 
+        public Result<DailyWeatherModel, Error> GetDailyWeatherById(int id)
+        {
+            DailyWeather dailyWeather = _repositoryDailyWeather.GetById(id);
+
+            if (dailyWeather == null)
+            {
+                return DailyWeatherErrors.DailyWeatherNotFound;
+            }
+
+            DailyWeatherModel dailyWeatherModel = _mapper.Map<DailyWeather, DailyWeatherModel>(dailyWeather);
+
+            return dailyWeatherModel;
+        }
+
         public Result<DailyWeatherModel, Error> GetByDate(DateOnly date)
         {
             DailyWeather dailyWeather = _repositoryDailyWeather.GetByDate(date);
