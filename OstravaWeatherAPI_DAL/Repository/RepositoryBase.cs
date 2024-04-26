@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Data;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace OstravaWeatherAPI_DAL.Repository
@@ -21,10 +22,9 @@ namespace OstravaWeatherAPI_DAL.Repository
             return _dbSet.Find(id);
         }
 
-        public T GetByDate(DateOnly date)
+        public T GetByPredicate(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet
-                .FirstOrDefault(e => EF.Property<DateOnly>(e, "Date") == date);
+            return _dbSet.FirstOrDefault(predicate);
         }
         
         public bool EntityExists(Expression<Func<T, bool>> predicate)

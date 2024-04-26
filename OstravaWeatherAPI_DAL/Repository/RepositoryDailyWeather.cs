@@ -1,11 +1,6 @@
 ﻿using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Data;
 using OstravaWeatherAPI_DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OstravaWeatherAPI_DAL.Repository
 {
@@ -16,6 +11,11 @@ namespace OstravaWeatherAPI_DAL.Repository
         public bool ExistsByDate(DateOnly date)
         {
             return EntityExists(e => e.Date == date);
-        }       
+        }
+
+        public DailyWeather GetByDate(DateOnly date)
+        {
+            return GetByPredicate(e => e.Date == date);
+        }
     }
 }

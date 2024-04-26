@@ -2,7 +2,7 @@
 using OstravaWeatherAPI_BAL.Models;
 using OstravaWeatherAPI_DAL.Contracts;
 using OstravaWeatherAPI_DAL.Entities;
-using System;
+
 namespace OstravaWeatherAPI_BAL.Services
 {
     public class ServiceDailyWeather
@@ -39,7 +39,7 @@ namespace OstravaWeatherAPI_BAL.Services
         }
 
         public Result<DailyWeatherModel, Error> GetByDate(DateOnly date)
-        {
+        {            
             DailyWeather dailyWeather = _repositoryDailyWeather.GetByDate(date);
 
             if (dailyWeather == null)
@@ -51,7 +51,5 @@ namespace OstravaWeatherAPI_BAL.Services
 
             return dailyWeatherModel;
         }
-
-
     }
 }

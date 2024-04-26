@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol.Plugins;
 using OstravaWeatherAPI_BAL.Models;
 using OstravaWeatherAPI_BAL.Services;
 
@@ -33,9 +32,5 @@ namespace OstravaWeatherAPI.Controllers
         {
             return GetResponse(_serviceDailyWeather.GetByDate(date));
         }
-
-
-
-
     }
 }
