@@ -1,4 +1,5 @@
 ﻿using Coravel.Invocable;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OstravaWeatherAPI_BAL.Models;
 using OstravaWeatherAPI_DAL.Contracts;
@@ -9,16 +10,18 @@ namespace OstravaWeatherAPI_BAL.Services
     public class GetWeatherFromOpenMeteo : IInvocable
     {
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _config;
         private readonly IRepositoryDailyWeather _repositoryDailyWeather;
 
-        public GetWeatherFromOpenMeteo(HttpClient httpClient, IRepositoryDailyWeather repositoryDailyWeather)
+        public GetWeatherFromOpenMeteo(HttpClient httpClient, IConfiguration config, IRepositoryDailyWeather repositoryDailyWeather)
         {
             _httpClient = httpClient;
+            _config = config;
             _repositoryDailyWeather = repositoryDailyWeather;
         }
         public async Task Invoke()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("https://api.open-meteo.com/v1/forecast?latitude=49.8347&longitude=18.282&daily=temperature_2m_max,temperature_2m_min,rain_sum&timezone=Europe%2FBerlin&forecast_days=1&models=best_match");
+            HttpResponseMessage response = await _httpClient.GetAsync(_config["BaseUrl"] + _config["UrlParameters"]);
             response.EnsureSuccessStatusCode();
 
             string responseJsonString = await response.Content.ReadAsStringAsync();
