@@ -1,39 +1,30 @@
 ﻿using Coravel.Invocable;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using OstravaWeatherAPI_BAL.Models;
+using OstravaWeatherAPI_BAL.Extensions;
 using OstravaWeatherAPI_DAL.Contracts;
-using OstravaWeatherAPI_DAL.Entities;
 
 namespace OstravaWeatherAPI_BAL.Services
 {
     public class GetWeatherFromOpenMeteo : IInvocable
     {
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _config;
         private readonly IRepositoryDailyWeather _repositoryDailyWeather;
+        private readonly DataDownloader _dataDownloader;
 
-        public GetWeatherFromOpenMeteo(HttpClient httpClient, IConfiguration config, IRepositoryDailyWeather repositoryDailyWeather)
+        public GetWeatherFromOpenMeteo(IRepositoryDailyWeather repositoryDailyWeather, DataDownloader dataDownloader)
         {
-            _httpClient = httpClient;
-            _config = config;
             _repositoryDailyWeather = repositoryDailyWeather;
+            _dataDownloader = dataDownloader;
         }
         public async Task Invoke()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync(_config["BaseUrl"] + _config["UrlParameters"]);
-            response.EnsureSuccessStatusCode();
-
-            string responseJsonString = await response.Content.ReadAsStringAsync();
-
-            Weather weather = JsonConvert.DeserializeObject<Weather>(responseJsonString);
+            var dailyWeather = await _dataDownloader.DownloadAndParseData(); 
             
-            DailyWeather dailyWeather = weather.ToDailyWeather();
-            
-            if (!dailyWeatherExists(dailyWeather.Date))
+            if (dailyWeather != null)
             {
-                _repositoryDailyWeather.Add(dailyWeather);
-            }        
+                if (!dailyWeatherExists(dailyWeather.Date))
+                {
+                    _repositoryDailyWeather.Add(dailyWeather);
+                }
+            }                       
         }
 
         private bool dailyWeatherExists(DateOnly date)

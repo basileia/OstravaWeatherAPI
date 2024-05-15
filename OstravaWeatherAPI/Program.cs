@@ -24,6 +24,7 @@ builder.Services.AddTransient<GetWeatherFromOpenMeteo>();
 builder.Services.AddHttpClient();
 builder.Services.AddScheduler();
 builder.Services.AddScoped<IMapper, Mapper>();
+builder.Services.AddTransient<DataDownloader>();
 
 
 builder.Services.AddEndpointsApiExplorer();
